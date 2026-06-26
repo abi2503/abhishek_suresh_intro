@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Abhishek Suresh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #d8d0c4;
+    --card: #ccc4b8;
+    --card-hover: #c2baae;
+    --border: rgba(0,0,0,0.1);
+    --text: #000000;
+    --muted: #555555;
+    --bullet-border: #bbbbbb;
+    --font: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+  .page { display: none; }
+  .page.active { display: block; }
+  #page-home { display: none; align-items: center; justify-content: center; flex-direction: column; min-height: 100vh; text-align: center; padding: 0 20px; }
+  #page-home.active { display: flex; }
+  .home-name { font-size: clamp(48px, 7vw, 64px); font-weight: 800; letter-spacing: -0.04em; line-height: 1; margin-bottom: 40px; color: #000; }
+  .home-nav { display: flex; gap: 12px; }
+  .nav-card { width: 160px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px 18px 18px; cursor: pointer; text-align: left; display: flex; flex-direction: column; gap: 32px; transition: background 0.15s, border-color 0.15s; user-select: none; }
+  .nav-card:hover { background: var(--card-hover); border-color: rgba(0,0,0,0.2); }
+  .nav-card-label { font-size: 15px; font-weight: 600; color: #000; letter-spacing: -0.01em; }
+  .nav-card-arrow { font-size: 15px; color: var(--muted); transition: transform 0.15s, color 0.15s; line-height: 1; }
+  .nav-card:hover .nav-card-arrow { transform: translateX(3px); color: #000; }
+  .inner-wrap { max-width: 680px; margin: 0 auto; padding: 48px 24px 100px; }
+  .back-btn { display: inline-flex; align-items: center; gap: 6px; background: none; border: none; font-family: var(--font); font-size: 13px; color: var(--muted); cursor: pointer; margin-bottom: 40px; padding: 0; transition: color 0.15s; }
+  .back-btn:hover { color: #000; }
+  .back-btn .arrow { transition: transform 0.15s; display: inline-block; }
+  .back-btn:hover .arrow { transform: translateX(-2px); }
+  .page-heading { font-size: 32px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 28px; color: #000; }
+  .card-list { display: flex; flex-direction: column; gap: 10px; }
+  .exp-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px 20px 18px; }
+  .exp-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+  .exp-company { font-size: 15px; font-weight: 600; color: #000; letter-spacing: -0.02em; }
+  .exp-date { font-size: 13px; color: var(--muted); font-weight: 400; flex-shrink: 0; margin-left: 12px; }
+  .exp-role { font-size: 13px; color: var(--muted); margin-bottom: 14px; font-weight: 400; }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .exp-bullets li { font-size: 13.5px; color: #222; font-weight: 400; line-height: 1.55; padding: 7px 0 7px 12px; border-left: 2px solid var(--bullet-border); margin-bottom: 5px; }
+  .exp-bullets li:last-child { margin-bottom: 0; }
+  .proj-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; transition: background 0.15s, border-color 0.15s; }
+  .proj-card:hover { background: var(--card-hover); border-color: rgba(0,0,0,0.2); }
+  .proj-name { font-size: 15px; font-weight: 700; color: #000; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .proj-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+  .proj-tag { font-size: 11.5px; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; font-weight: 400; }
+  .proj-desc { font-size: 13.5px; color: #333; font-weight: 400; line-height: 1.6; }
+  .about-bio { font-size: 14px; color: #333; font-weight: 400; line-height: 1.75; margin-bottom: 20px; }
+  .about-links { font-size: 13px; color: #333; margin-bottom: 32px; }
+  .about-links a { color: #000; text-decoration: underline; text-decoration-color: #aaa; }
+  .skills-block { margin-top: 8px; }
+  .skills-block h3 { font-size: 10.5px; font-weight: 600; color: #999; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .skills-pills { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 24px; }
+  .s-pill { font-size: 12.5px; color: #444; border: 1px solid rgba(0,0,0,0.15); border-radius: 7px; padding: 4px 11px; background: #c8c0b4; font-weight: 400; }
+  @media (max-width: 480px) {
+    .home-name { font-size: 44px; }
+    .home-nav { flex-direction: column; width: 100%; max-width: 300px; }
+    .nav-card { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div id="page-home" class="page active">
+  <p class="home-name">Hi! I'm Abhishek Suresh</p>
+  <div class="home-nav">
+    <div class="nav-card" onclick="go('experience')">
+      <span class="nav-card-label">Experience</span>
+      <span class="nav-card-arrow">&#8594;</span>
+    </div>
+    <div class="nav-card" onclick="go('projects')">
+      <span class="nav-card-label">Projects</span>
+      <span class="nav-card-arrow">&#8594;</span>
+    </div>
+    <div class="nav-card" onclick="go('about')">
+      <span class="nav-card-label">About</span>
+      <span class="nav-card-arrow">&#8594;</span>
+    </div>
+    <div class="nav-card" onclick="window.open('https://drive.google.com/file/d/1ge4nt3he4611BFAF8yeChH1g4FuL0yS9/view','_blank')">
+      <span class="nav-card-label">Resume</span>
+      <span class="nav-card-arrow">&#8594;</span>
+    </div>
+  </div>
+</div>
+
+<div id="page-experience" class="page">
+  <div class="inner-wrap">
+    <button class="back-btn" onclick="go('home')"><span class="arrow">&#8592;</span> Back</button>
+    <h1 class="page-heading">Experience</h1>
+    <div class="card-list">
+      <div class="exp-card">
+        <div class="exp-top">
+          <span class="exp-company">Archemy Inc</span>
+          <span class="exp-date">Aug 2025 &middot; Present</span>
+        </div>
+        <div class="exp-role">AI Engineer &middot; New York, USA</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-top">
+          <span class="exp-company">Bread Financial</span>
+          <span class="exp-date">Jan 2023 &middot; Aug 2023</span>
+        </div>
+        <div class="exp-role">RPA Developer &middot; Bengaluru, India</div>
+      </div>
+      <div class="exp-card">
+        <div class="exp-top">
+          <span class="exp-company">Infosys Ltd</span>
+          <span class="exp-date">Sep 2019 &middot; Jan 2022</span>
+        </div>
+        <div class="exp-role">Systems Engineer &middot; Pune, India</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="page-projects" class="page">
+  <div class="inner-wrap">
+    <button class="back-btn" onclick="go('home')"><span class="arrow">&#8592;</span> Back</button>
+    <h1 class="page-heading">Projects</h1>
+    <div class="card-list">
+
+      <div class="proj-card" onclick="window.open('https://ai-financial-advisor-t6kt-abi2503s-projects.vercel.app/','_blank')" style="cursor:pointer;">
+        <div class="proj-name" style="display:flex;justify-content:space-between;align-items:center;">AI Trading Floor <span style="font-size:12px;color:var(--muted);">↗</span></div>
+        <div class="proj-tags">
+          <span class="proj-tag">AWS</span>
+          <span class="proj-tag">OpenAI Agents SDK</span>
+          <span class="proj-tag">Playwright MCP</span>
+          <span class="proj-tag">Terraform</span>
+          <span class="proj-tag">Next.js</span>
+          <span class="proj-tag">EventBridge</span>
+        </div>
+        <p class="proj-desc">A production multi-agent LLM system featuring auto-routing, RAG memory, tool-augmented research, and agent debate for trade simulation, built on AWS with guardrails, observability, and scheduled autonomous workflows.</p>
+      </div>
+
+      <div class="proj-card" onclick="window.open('https://metaml-taxonomy-knowledge-graph-rfptqutbnmfcdtwg2n5vin.streamlit.app/','_blank')" style="cursor:pointer;">
+        <div class="proj-name" style="display:flex;justify-content:space-between;align-items:center;">Knowledge Graph Explorer <span style="font-size:12px;color:var(--muted);">↗</span></div>
+        <div class="proj-tags">
+          <span class="proj-tag">Streamlit</span>
+          <span class="proj-tag">Knowledge Graph</span>
+          <span class="proj-tag">SQL-to-Ontology</span>
+          <span class="proj-tag">FastAPI</span>
+          <span class="proj-tag">Vercel</span>
+        </div>
+        <p class="proj-desc">Dashboard for exploring a 3-level ML taxonomy with semantic search, graph navigation, concept similarity, free-text classification, and coverage auditing.</p>
+      </div>
+
+      <div class="proj-card" onclick="window.open('https://huggingface.co/abi2503/pricer-2025-08-08_22.08.33','_blank')" style="cursor:pointer;">
+        <div class="proj-name" style="display:flex;justify-content:space-between;align-items:center;">Fine-Tuned Price Prediction Model <span style="font-size:12px;color:var(--muted);">↗</span></div>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Hugging Face</span>
+          <span class="proj-tag">LoRA</span>
+          <span class="proj-tag">QLoRA</span>
+          <span class="proj-tag">Ollama</span>
+        </div>
+        <p class="proj-desc">Fine-tuned GPT-4, Claude, and LLaMA 3.1 on an Amazon product dataset using LoRA and QLoRA. Built prompt engineering templates and eval benchmarks (MSLE, MAE) to measure pricing accuracy against classical ML baselines.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="page-about" class="page">
+  <div class="inner-wrap">
+    <button class="back-btn" onclick="go('home')"><span class="arrow">&#8592;</span> Back</button>
+    <h1 class="page-heading">About</h1>
+    <p style="font-size:13px; color:var(--muted); margin-bottom:20px; display:flex; align-items:center; gap:5px;">📍 New York, USA</p>
+    <p class="about-bio">I am an AI &amp; data engineer with 3+ years of experience building ML systems, automation pipelines, and cloud infrastructure. I want to use technology to solve hard problems. With a master's degree in Information Systems from NYU, I am proficient in modern AI agent frameworks, computer-use tooling, and full-stack development.</p>
+    <p class="about-links" style="background:#c8c0b4; border-radius:8px; padding:10px 14px; display:inline-block;">
+      <a href="mailto:as18757@nyu.edu">as18757@nyu.edu</a> &nbsp;&middot;&nbsp;
+      <a href="tel:5512298434">551-229-8434</a> &nbsp;&middot;&nbsp;
+      <a href="https://github.com/abi2503" target="_blank">GitHub</a> &nbsp;&middot;&nbsp;
+      <a href="https://www.linkedin.com/in/abhishek-s-141989145/" target="_blank">LinkedIn</a>
+    </p>
+    <div class="skills-block">
+      <h3>Programming</h3>
+      <div class="skills-pills">
+        <span class="s-pill">Python</span><span class="s-pill">SQL</span><span class="s-pill">JavaScript</span>
+      </div>
+      <h3>Machine Learning</h3>
+      <div class="skills-pills">
+        <span class="s-pill">PyTorch</span><span class="s-pill">TensorFlow</span><span class="s-pill">Scikit-Learn</span>
+        <span class="s-pill">LLM Fine-Tuning</span><span class="s-pill">LoRA</span><span class="s-pill">QLoRA</span>
+        <span class="s-pill">Embeddings</span><span class="s-pill">Model Drift Monitoring</span>
+      </div>
+      <h3>Generative AI</h3>
+      <div class="skills-pills">
+        <span class="s-pill">OpenAI Agents SDK</span><span class="s-pill">LangChain</span><span class="s-pill">LangGraph</span>
+        <span class="s-pill">MCP</span><span class="s-pill">Playwright</span><span class="s-pill">Prompt Engineering</span>
+        <span class="s-pill">Multi-Agent Systems</span><span class="s-pill">Guardrails</span>
+        <span class="s-pill">RAG</span><span class="s-pill">ChromaDB</span><span class="s-pill">Pinecone</span>
+        <span class="s-pill">BM25</span><span class="s-pill">MMR Reranking</span><span class="s-pill">Knowledge Graphs</span>
+      </div>
+      <h3>Evaluation &amp; MLOps</h3>
+      <div class="skills-pills">
+        <span class="s-pill">LangSmith</span><span class="s-pill">RAGAS</span><span class="s-pill">LLM Evaluation Frameworks</span>
+        <span class="s-pill">Airflow</span><span class="s-pill">CI/CD</span><span class="s-pill">Feedback Loops</span>
+      </div>
+      <h3>Cloud &amp; Infrastructure</h3>
+      <div class="skills-pills">
+        <span class="s-pill">AWS Bedrock</span><span class="s-pill">ECS Fargate</span><span class="s-pill">SageMaker</span>
+        <span class="s-pill">S3 Vectors</span><span class="s-pill">Aurora Serverless</span><span class="s-pill">Lambda</span>
+        <span class="s-pill">API Gateway</span><span class="s-pill">SQS</span><span class="s-pill">EventBridge</span>
+        <span class="s-pill">GCP</span><span class="s-pill">Azure ML</span>
+      </div>
+      <h3>Tools</h3>
+      <div class="skills-pills">
+        <span class="s-pill">Docker</span><span class="s-pill">Terraform</span><span class="s-pill">MongoDB</span>
+        <span class="s-pill">PostgreSQL</span><span class="s-pill">FastAPI</span><span class="s-pill">UiPath</span>
+        <span class="s-pill">Automation Anywhere</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function go(id) {
+  document.querySelectorAll(".page").forEach(function(p) { p.classList.remove("active"); });
+  document.getElementById("page-" + id).classList.add("active");
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
